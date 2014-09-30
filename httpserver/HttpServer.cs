@@ -18,7 +18,7 @@ namespace httpserver
     {
         private const string RN = "\r\n"; // skifterlinje 
 
-        private static readonly string RootCatalog = @"c:/Users/Herprit/Desktop/WebServer/TEST.html";
+        private static readonly string RootCatalog = @"c:/Users/Herprit/Desktop/WebServer/TEST.HTML";
 
         public static readonly int DefaultPort = 8080;
 
@@ -54,11 +54,21 @@ namespace httpserver
             sw.WriteLine(answer);
             Console.WriteLine(answer);
 
-            //Læser fra flien på computeren
-            FileStream fs = File.OpenRead(RootCatalog);
-            fs.CopyTo(sw.BaseStream);
-            sw.BaseStream.Flush();
-            sw.Flush();
+            //Læser fra flien på computeren. Lavet en try/catch, hvis nu filen ikke findes
+            try
+            {
+                FileStream fs = File.OpenRead(RootCatalog);
+                fs.CopyTo(sw.BaseStream);
+                sw.BaseStream.Flush();
+                sw.Flush();
+          
+            }
+            catch (Exception)
+            {
+
+                Console.WriteLine("File Not Found");
+            }
+          
           
 
             connectionSocket.Close();
