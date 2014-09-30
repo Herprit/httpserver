@@ -20,7 +20,8 @@ namespace httpserver
 
             HttpServer httpServer = new HttpServer(tcpConnection);
 
-            httpServer.steams();
+            //httpServer.steams();
+         httpServer.steams();
            
           
             tcpConnection.Close();
