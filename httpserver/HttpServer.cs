@@ -17,9 +17,9 @@ namespace httpserver
         private const string RN = "\r\n"; // skifterlinje
 
         public static readonly int DefaultPort = 8080;
-        
 
         TcpClient connectionSocket;
+        private string[] _stringA;
 
         public HttpServer(TcpClient connectionSocket)
         {
@@ -37,16 +37,20 @@ namespace httpserver
             // request
             string message = sr.ReadLine();
             Console.WriteLine("Client: " + message);
-            Console.WriteLine(message);
-            
-            
+             
+            //split /
+            string[] splitAR = new string[3];
+            splitAR = message.Split(' ');
+            Console.WriteLine("tester: " + splitAR.GetValue(1));
+   
+
             //Response
             string answer = "GET /HTTP/1.0 200 OK\r\n\r\nHello World";
             sw.WriteLine(answer);
             Console.WriteLine(answer);
 
-
-  
+       
+           
 
 
 

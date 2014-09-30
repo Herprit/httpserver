@@ -16,7 +16,7 @@ namespace httpserver
              serverSocket.Start();
 
             TcpClient tcpConnection = serverSocket.AcceptTcpClient();
-            Console.WriteLine("Server STARTET");
+            Console.WriteLine("Server Online");
 
             HttpServer httpServer = new HttpServer(tcpConnection);
 
