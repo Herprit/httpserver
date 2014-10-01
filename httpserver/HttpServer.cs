@@ -18,20 +18,23 @@ namespace httpserver
     {
         private const string RN = "\r\n"; // skifterlinje 
 
-        private static readonly string RootCatalog = @"c:/Users/Herprit/Desktop/WebServer/TEST.HTML";
+        private static readonly string RootCatalog = @"c:/Users/Herprit/Desktop/WebServer/1COpgave.HTML";
 
         public static readonly int DefaultPort = 8080;
 
-        private TcpClient connectionSocket;
-        private string[] _stringA;
+      public TcpClient connectionSocket;
 
+        private string[] _stringA;
+       
+        //Constructor til classen, som har en connectionsocket som parameter.
         public HttpServer(TcpClient connectionSocket)
         {
             this.connectionSocket = connectionSocket;
         }
-
-
-        public void steams()
+        /// <summary>
+        /// Metode streams.
+        /// </summary>
+        public void streams()
         {
             NetworkStream ns = connectionSocket.GetStream();
 
@@ -48,14 +51,14 @@ namespace httpserver
             splitAR = message.Split(' ');
             Console.WriteLine("tester: " + splitAR.GetValue(1));
 
-           
-            
+
+
             //Spørger efter fil findes!
-            if(File.Exists(RootCatalog))
+            if (File.Exists(RootCatalog))
             {
-                string answer = "HTTP/1.0 200 OK \r\n\r\n";
+                string answer = "HTTP/1.0 200 OK\r\n\r\n";
                 sw.Write(answer);
-                
+
                 //Læser fra flien på computeren. Lavet en try/catch, hvis nu filen ikke findes
                 try
                 {
@@ -67,7 +70,7 @@ namespace httpserver
                 }
                 catch (Exception)
                 {
-                   
+
                 }
 
             }
