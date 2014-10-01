@@ -48,32 +48,41 @@ namespace httpserver
             splitAR = message.Split(' ');
             Console.WriteLine("tester: " + splitAR.GetValue(1));
 
-
-            //Response
-            string answer = "GET /HTTP/1.0 200 OK\r\n\r\nHello World";
-            sw.WriteLine(answer);
-            Console.WriteLine(answer);
-
-            //Læser fra flien på computeren. Lavet en try/catch, hvis nu filen ikke findes
-            try
+           
+            
+            //Spørger efter fil findes!
+            if(File.Exists(RootCatalog))
             {
-                FileStream fs = File.OpenRead(RootCatalog);
-                fs.CopyTo(sw.BaseStream);
-                sw.BaseStream.Flush();
-                sw.Flush();
-          
+                string answer = "HTTP/1.0 200 OK \r\n\r\n";
+                sw.Write(answer);
+                
+                //Læser fra flien på computeren. Lavet en try/catch, hvis nu filen ikke findes
+                try
+                {
+                    FileStream fs = File.OpenRead(RootCatalog);
+                    fs.CopyTo(sw.BaseStream);
+                    sw.BaseStream.Flush();
+                    sw.Flush();
+
+                }
+                catch (Exception)
+                {
+                   
+                }
+
             }
-            catch (Exception)
-            {
 
+            else
+            {
+                string answer1 = "HTTP/1.0 404 Not Found" + RN + RN;
+                sw.Write(answer1);
                 Console.WriteLine("File Not Found");
             }
-          
-          
+
 
             connectionSocket.Close();
         }
 
-        
+
     }
 }
