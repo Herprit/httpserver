@@ -14,7 +14,7 @@ namespace httpserver
     public class Program
     {
         public static TcpClient tcpconnection;
-        public Log Log;
+  
       
         public static void Main(string[] args)
         {
@@ -23,6 +23,7 @@ namespace httpserver
             TcpListener serverSocket = new TcpListener(8080);
             serverSocket.Start();
            
+            Log.WriteInfo("Server Startet");
            
           
             ////kan accepter flere clienter på en gang.
@@ -34,7 +35,11 @@ namespace httpserver
                     HttpServer httpServer = new HttpServer(tcpconnection);
                     httpServer.connectionHandler();
                     
+
+                    Log.WriteInfo("Nyclient");
+
                     tcpconnection.Close();
+                 
                 });
 
             }

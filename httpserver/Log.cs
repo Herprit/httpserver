@@ -12,35 +12,25 @@ namespace EventLogExample
     {
         const string Source = "HttpServer Online";
         const string sLog = "Application";
-        const string Message = "Sample Event blah";
+        //const string Message = "Sample Event blah"
 
-        public void Logging()
+       //WriteInfo Log!
+      public static void WriteInfo(string message)
         {
             if (!EventLog.SourceExists(Source))
             {
                 EventLog.CreateEventSource(Source, sLog);
             }
-
-            //WriteToLogUsingStaticMethods();
-            WriteToLogUsingObjectMethods();
-        }
-
-        private static void WriteToLogUsingStaticMethods()
-        {
-            EventLog.WriteEntry(Source, Message);
-            int eventId = 234;
-            EventLog.WriteEntry(Source, Message, EventLogEntryType.Warning, eventId);
-        }
-
-        private static void WriteToLogUsingObjectMethods()
-        {
+           
             string machineName = "."; // this computer
+           
             using (EventLog log = new EventLog(sLog, machineName, Source))
             {
-                log.WriteEntry("Server Startet");
-                //log.WriteEntry("Hello again", EventLogEntryType.Information);
-                //log.WriteEntry("Hello again again", EventLogEntryType.Information, 14593);
+               
+                log.WriteEntry(message, EventLogEntryType.Information);
+             
             }
+
         }
     }
 }

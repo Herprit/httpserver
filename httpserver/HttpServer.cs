@@ -26,8 +26,6 @@ namespace httpserver
         public static readonly int DefaultPort = 8080;
 
         public TcpClient connectionSocket;
-
-        public Log Logging;
     
         private string[] _stringA;
        
@@ -47,7 +45,6 @@ namespace httpserver
             StreamReader sr = new StreamReader(ns);
             StreamWriter sw = new StreamWriter(ns);
             sw.AutoFlush = true;
-  
 
             string statuslinee = GetStatusLine(sr);
             if (statuslinee == null)
@@ -71,6 +68,7 @@ namespace httpserver
             {
                 string statusline = "HTTP/1.0 200 OK\r\n\r\n";
                 sw.Write(statusline);
+                Console.WriteLine("HTTP/1.0 200 OK");
 
                 //Læser fra flien på computeren. Lavet en try/catch, hvis nu filen ikke findes
                 try
@@ -103,7 +101,7 @@ namespace httpserver
         {
             // request
             string message = sr.ReadLine();
-            Console.WriteLine("Client: " + message + RN + date);
+            Console.WriteLine("Client Request: " + message + RN + date);
 
             //split /
             string[] splitAR = new string[3];
