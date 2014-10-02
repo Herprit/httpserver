@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
 using httpserver;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -21,7 +22,6 @@ namespace httpserverTest
             line = GetFirstLine("GET /fileDoesNotExist.txt HTTP/1.0");
             Assert.AreEqual("HTTP/1.0 404 Not Found", line);
         }
-
 
         //[TestMethod]
         //public void TestGetIllegalRequest()
