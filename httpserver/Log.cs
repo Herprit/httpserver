@@ -14,7 +14,7 @@ namespace EventLogExample
         const string sLog = "Application";
 
 
-        //WriteInfo Log!
+        //WriteInfo Log! string message gør det muligt jeg selv kan skrive info om loggen.
         public static void WriteInfo(string message)
         {
             if (!EventLog.SourceExists(Source))

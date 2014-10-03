@@ -20,33 +20,25 @@ namespace httpserver
     public class HttpServer
     {
         private const string RN = "\r\n"; // skifterlinje  //clrf
-
         private string date = "Date: " + DateTime.Now.ToString();
-
-        private string Length = "content lenght: ";
-
+        private string contentLength = "Content Lenght: ";
         private string contentType = "Content type: text/html";
-
-        private static readonly string RootCatalog = @"c:/Users/Herprit/Desktop/WebServer/1COpgave.HTML";
-
+        private string fileNotfound = "HTTP/1.0 404 Not Found";
+        private static readonly string RootCatalog = @"c:/Users/Herprit/Desktop/WebServer/1COpgave.html";
         public static readonly int DefaultPort = 8080;
-
-        public TcpClient connectionSocket;
-
-        private string[] _stringA;
-
+        public TcpClient ConnectionSocket;
 
         //Constructor til classen, som har en connectionsocket som parameter.
         public HttpServer(TcpClient connectionSocket)
         {
-            this.connectionSocket = connectionSocket;
+            this.ConnectionSocket = connectionSocket;
         }
 
 
         // ConnectionHandler
         public void connectionHandler()
         {
-            NetworkStream ns = connectionSocket.GetStream();
+            NetworkStream ns = ConnectionSocket.GetStream();
 
             StreamReader sr = new StreamReader(ns);
             StreamWriter sw = new StreamWriter(ns);
@@ -66,7 +58,7 @@ namespace httpserver
                 return;
             }
 
-            connectionSocket.Close();
+            ConnectionSocket.Close();
             ns.Close();
 
 
@@ -80,7 +72,7 @@ namespace httpserver
             {
                 string statusline = "HTTP/1.0 200 OK \r\n\r\n";
                 sw.Write(statusline);
-                Console.WriteLine("HTTP/1.0 200 OK" + RN + date);
+                Console.WriteLine("HTTP/1.0 200 OK" + RN + date + RN);
 
                 //Læser fra flien på computeren. Lavet en try/catch, hvis nu filen ikke findes
                 try
@@ -91,6 +83,7 @@ namespace httpserver
                     sw.Flush();
 
                 }
+
                 catch (Exception)
                 {
 
@@ -100,8 +93,9 @@ namespace httpserver
 
             else
             {
+                //response file not found! to browser
                 Console.WriteLine("HTTP/1.0 200 OK");
-                string answer1 = "HTTP/1.0 404 Not Found" + RN + RN + date;
+                string answer1 = "HTTP/1.0 404 Not Found" + RN + RN + date + RN + RN + fileNotfound;
                 sw.Write(answer1);
                 Console.WriteLine("File Not Found");
 
@@ -115,7 +109,7 @@ namespace httpserver
         public string GetStatusLine(StreamReader sr)
         {
             string message = sr.ReadLine();
-            Console.WriteLine("Request: " + message + RN + date + RN + Length + RootCatalog.Length + RN + contentType + RN);
+            Console.WriteLine("Request: " + message + RN + date + RN + contentLength + RootCatalog.Length + RN + contentType + RN);
             Log.WriteInfo("Client Request");
 
             //split /
@@ -127,7 +121,7 @@ namespace httpserver
 
         }
 
-        // kunne lave en reponse metode for mere overskulighed. 
+        // kunne lave en reponse metode for mere overskulighed, i en klasse for sig selv, det samme med request!
 
         //public string response(StreamWriter sw)
         //{

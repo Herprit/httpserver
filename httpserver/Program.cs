@@ -29,7 +29,8 @@ namespace httpserver
             ////kan accepter flere clienter på en gang.
             while (true)
             {
-                TcpClient tcpconnection = serverSocket.AcceptTcpClient();
+
+              TcpClient  tcpconnection = serverSocket.AcceptTcpClient();
                 Task.Factory.StartNew(() =>
                 {
                     HttpServer httpServer = new HttpServer(tcpconnection);
@@ -42,10 +43,16 @@ namespace httpserver
                     tcpconnection.Close();
 
                 });
+
             }
+
         }
+
+
+
     }
 }
+
 
 
 
